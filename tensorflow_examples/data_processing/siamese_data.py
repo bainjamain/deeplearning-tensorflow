@@ -23,28 +23,34 @@ class MNIST(object):
         mnist = fetch_mldata('MNIST original')
         return mnist['data'], mnist['target']
     
-    def chose_same_number(self, phase):
-        digit = np.random.choice(self.digits)
+    def chose_same_number(self, phase, one_shot=False):
+        if not one_shot:
+            digit = np.random.choice(self.digits)
+        else:
+            digit = np.random.choice(self.digits[:7])
         digit_indexes =  np.random.choice(len(getattr(self, digit + '_' + phase)), size=2, replace=False)
         return tuple(getattr(self, digit + '_' + phase)[i] for i in digit_indexes)
     
-    def chose_different_numbers(self, phase):
-        digits = np.random.choice(self.digits, size=2, replace=False)
+    def chose_different_numbers(self, phase, one_shot=False):
+        if not one_shot:
+            digits = np.random.choice(self.digits, size=2, replace=False)
+        else:
+            digits = np.random.choice(self.digits[:7], size=2, replace=False)
         digit_indexes =  [np.random.choice(len(getattr(self, i + '_' + phase))) for i in digits]
         return tuple(getattr(self, digit + '_' + phase)[index] for digit, index in zip(digits, digit_indexes))
     
-    def get_next_batch(self, batch, phase='train'):     
+    def get_next_batch(self, batch, phase='train', one_shot=False):     
         x1_ = []
         x2_ = []
         y_ = []
         for _ in range(batch):
             if np.random.uniform() <= .5: # we chose two different numbers
-                x1_tmp, x2_tmp = self.chose_different_numbers(phase)
+                x1_tmp, x2_tmp = self.chose_different_numbers(phase, one_shot=one_shot)
                 x1_.append(x1_tmp)
                 x2_.append(x2_tmp)
                 y_.append(np.asarray([0, 1]))
             else: # we chose two similar numbers
-                x1_tmp, x2_tmp = self.chose_same_number(phase)
+                x1_tmp, x2_tmp = self.chose_same_number(phase, one_shot=one_shot)
                 x1_.append(x1_tmp)
                 x2_.append(x2_tmp)
                 y_.append(np.asarray([1, 0]))

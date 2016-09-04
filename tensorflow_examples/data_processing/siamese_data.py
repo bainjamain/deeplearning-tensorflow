@@ -48,12 +48,12 @@ class MNIST(object):
                 x1_tmp, x2_tmp = self.chose_different_numbers(phase, one_shot=one_shot)
                 x1_.append(x1_tmp)
                 x2_.append(x2_tmp)
-                y_.append(np.asarray([0, 1]))
+                y_.append(0)
             else: # we chose two similar numbers
                 x1_tmp, x2_tmp = self.chose_same_number(phase, one_shot=one_shot)
                 x1_.append(x1_tmp)
                 x2_.append(x2_tmp)
-                y_.append(np.asarray([1, 0]))
+                y_.append(1)
 
         x1_ = np.asarray([x_.reshape((28, 28)) for x_ in x1_])
         x2_ = np.asarray([x_.reshape((28, 28)) for x_ in x2_])

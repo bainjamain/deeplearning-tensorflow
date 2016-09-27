@@ -27,7 +27,7 @@ class MNIST(object):
         if not one_shot:
             digit = np.random.choice(self.digits)
         else:
-            digit = np.random.choice(self.digits[:7])
+            digit = np.random.choice(self.digits[:8])
         digit_indexes =  np.random.choice(len(getattr(self, digit + '_' + phase)), size=2, replace=False)
         return tuple(getattr(self, digit + '_' + phase)[i] for i in digit_indexes)
     
@@ -35,11 +35,26 @@ class MNIST(object):
         if not one_shot:
             digits = np.random.choice(self.digits, size=2, replace=False)
         else:
-            digits = np.random.choice(self.digits[:7], size=2, replace=False)
+            digits = np.random.choice(self.digits[:8], size=2, replace=False)
         digit_indexes =  [np.random.choice(len(getattr(self, i + '_' + phase))) for i in digits]
         return tuple(getattr(self, digit + '_' + phase)[index] for digit, index in zip(digits, digit_indexes))
     
-    def get_next_batch(self, batch, phase='train', one_shot=False):     
+    def get_next_batch(self, batch, phase='train', one_shot=False):
+        """
+        Args:
+            batch: an `integer` representing the size of the batch.
+            phase: a `string` in `['train', 'test']`. Indicates which
+                data to retrieve.
+            one_shot: a `boolean`. If True, data of eights and nines
+                are dismissed during training and testing.
+
+        Returns:
+            x1_: a `numpy array` of shape `(batch, 28, 28)` containing
+                images for the first network.
+            x2_: a `numpy array` similar to x1_ containing images
+                for the second network.
+            y_: a `numpy array` of shape `(batch)` containing the labels.
+        """
         x1_ = []
         x2_ = []
         y_ = []

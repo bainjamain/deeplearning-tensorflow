@@ -8,6 +8,10 @@ class MNIST(object):
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(
                         self.x, self.y, test_size=0.25, random_state=0)
         self.split_data()
+
+        self.data_n = 0 # size of training data set
+        for digit in self.digits:
+            self.data_n += len(getattr(self, digit + '_train'))
         
     def split_data(self):
         self.digits = ['zeros', 'ones', 'twos', 'threes', 'fours', 'fives', 'six', 'sevens', 'eights', 'nines']

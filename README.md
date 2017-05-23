@@ -4,7 +4,7 @@ This repository aims at helping people start practically with deep learning with
 
 ## Frameworks
 
-Most examples are presented in both TensorFlow (python) and Torch (Lua).
+The examples are presented in TensorFlow (python), PyTorch (python) and Torch (Lua).
 
 ## Resources
 

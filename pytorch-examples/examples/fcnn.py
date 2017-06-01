@@ -17,7 +17,6 @@ batch = 100
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch, shuffle=True)
 test_loader = torch.utils.data.DataLoader(test_data, batch_size=batch)
 
-
 # Defining the fully convolutional neural network
 class FCNN(nn.Module):
     def __init__(self):
